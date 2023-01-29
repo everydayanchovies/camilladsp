@@ -541,6 +541,11 @@ fn playback_loop_bytes(
             }
             Ok(AudioMessage::Pause) => {
                 trace!("Pause message received");
+                channels
+                    .status
+                    .send(StatusMessage::PlaybackDone)
+                    .unwrap_or(());
+                break;
             }
             Ok(AudioMessage::EndOfStream) => {
                 channels
